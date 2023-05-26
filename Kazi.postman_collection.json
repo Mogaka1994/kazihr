@@ -1,0 +1,158 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Kazi",
+		"_postman_id": "13782325-4e15-7a66-cfba-6586276c1374",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8081/api/test/create_user",
+			"request": {
+				"url": "http://localhost:8081/api/test/create_user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstname\":\"Polycarp\",\n\t\"lastname\":\"Mogaka\",\n\t\"username\":\"Mogaka\",\n\t\"admin\":1,\n\t\"msisdn\":\"254717593172\",\n\t\"email\":\"polycarpmogaka16@gmail.com\",\n\t\"role\":[\"ROLE_USER\",\"ROLE_MODERATOR\",\"ROLE_ADMIN\"]\n\n\t\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/api/test/users",
+			"request": {
+				"url": "http://localhost:8081/api/test/users",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"msisdn\":\"254714593171\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/api/test/get_user",
+			"request": {
+				"url": "http://localhost:8081/api/test/get_user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"msisdn\":\"255762633442\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/api/auth/signin",
+			"request": {
+				"url": "http://localhost:8081/api/auth/signin",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"betty1997\",\n\t\"password\":\"8LoMqePfG\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/api/test/upload",
+			"request": {
+				"url": "http://localhost:8081/api/test/upload",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiZXR0eTE5OTciLCJpYXQiOjE2ODMxMjE0OTYsImV4cCI6MTY4MzIwNzg5Nn0.Y6OXHRQPtgMzI_NaCjaZffg2i412YCcR1JSmO-UyGG9MLTdQjCpbF2V4stiXSjUWEZW676xO8go3NLJVvJrk1w",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/api/auth/stkCallBack",
+			"request": {
+				"url": "http://localhost:8081/api/auth/stkCallBack",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"Body\": {\r\n\t\t\"stkCallback\": {\r\n\t\t\t\"MerchantRequestID\": \"120329-12478794-1\",\r\n\t\t\t\"CheckoutRequestID\": \"ws_CO_191220191020363925\",\r\n\t\t\t\"ResultCode\": 0,\r\n\t\t\t\"ResultDesc\": \"The service request is processed successfully.\",\r\n\t\t\t\"CallbackMetadata\": {\r\n\t\t\t\t\"Item\": [\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"Name\": \"Amount\",\r\n\t\t\t\t\t\t\"Value\": 1000.0\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"Name\": \"MpesaReceiptNumber\",\r\n\t\t\t\t\t\t\"Value\": \"NLJ7RT61SV\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"Name\": \"TransactionDate\",\r\n\t\t\t\t\t\t\"Value\": 20191219102115\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"Name\": \"PhoneNumber\",\r\n\t\t\t\t\t\t\"Value\": 254708374149\r\n\t\t\t\t\t}\r\n\t\t\t\t]\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/api/auth/repay",
+			"request": {
+				"url": "http://localhost:8081/api/auth/repay",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"msisdn\":\"254714593171\",\n\t\"amount\":\"1000\",\n\t\"reference\":\"EO261\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

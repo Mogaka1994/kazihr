@@ -1,0 +1,36 @@
+spring:
+  jpa:
+    generate-ddl: true
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+  datasource:
+    password: kazi$101
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: kazi
+    url: jdbc:mysql://localhost:3306/kazi
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+swagger:
+  enable: 'true'
+pass:
+  secret: kaziiko
+jwt:
+  secret: kaziiko
+  ExpirationMs: '86400000'
+server:
+  tomcat:
+    max-connections: '10000'
+    max-threads: '500'
+  port: '8081'
+mpesa:
+  consumersecret: GO1HVqoeA3FAOGrH
+  b2c: https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest
+  stkpush: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+  callback: https://google.com
+  consumerkey: mAbzG8t0PQXnyBmZNsCqPyUovnTC9W1c
+  query: https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query
+  shortcode: '174379'
+  passkey: bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919

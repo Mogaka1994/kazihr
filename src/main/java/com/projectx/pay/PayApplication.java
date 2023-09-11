@@ -1,10 +1,13 @@
 package com.projectx.pay;
 
+import com.projectx.pay.utils.PdfGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableAsync;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -12,13 +15,16 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @SpringBootApplication
+@EnableAsync
 public class PayApplication {
 
 	@Autowired
 	Environment env;
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(PayApplication.class, args);
+
 	}
 
 

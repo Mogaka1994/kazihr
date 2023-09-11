@@ -1,18 +1,15 @@
 package com.projectx.pay.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 
 @Table(name = "employees")
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

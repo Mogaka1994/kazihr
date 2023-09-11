@@ -1,14 +1,13 @@
 package com.projectx.pay.entity;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "roles")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

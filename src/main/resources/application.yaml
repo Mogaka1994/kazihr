@@ -1,6 +1,7 @@
 spring:
   jpa:
     generate-ddl: true
+    show-sql: true
   servlet:
     multipart:
       max-file-size: 2MB
@@ -22,9 +23,9 @@ jwt:
   ExpirationMs: '86400000'
 server:
   tomcat:
-    max-connections: '10000'
+    max-connections: 10000
     max-threads: '500'
-  port: '8081'
+  port: 8081
 mpesa:
   consumersecret: GO1HVqoeA3FAOGrH
   b2c: https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest
@@ -34,3 +35,15 @@ mpesa:
   query: https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query
   shortcode: '174379'
   passkey: bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919
+reportFileName: User-Report
+logging:
+     level:
+      org.hibernate.SQL: DEBUG
+pdfDir: D:/PdfReportRepo/
+reportFileNameDateFormat: dd_MMMM_yyyy
+localDateFormat: dd MMMM yyyy HH:mm:ss
+logoImgPath: D:/logo.png
+logoImgScale: 50,50
+table_noOfColumns: 4
+table.columnNames: User Id,First Name,Last Name,Email
+

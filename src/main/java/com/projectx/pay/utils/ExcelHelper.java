@@ -96,48 +96,47 @@ public class ExcelHelper {
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = cellsInRow.next();
                     switch (cellIdx) {
-                        case 1:
+                        case 4:
                             emp.setAge(String.valueOf(currentCell.getNumericCellValue()));
                             break;
-                        case 3:
+                        case 7:
                             emp.setDepartment(currentCell.getStringCellValue());
                             break;
-                        case 4:
-                            emp.setEmployment_date(String.valueOf(currentCell.getNumericCellValue()));
-                            break;
-                        case 5:
+//                        case 4:
+//                            emp.setEmployment_date(String.valueOf(currentCell.getNumericCellValue()));
+//                            break;
+                        case 2:
                             emp.setFirstname(currentCell.getStringCellValue());
                             break;
                         case 6:
                             emp.setGender(currentCell.getStringCellValue());
                             break;
-                        case 7:
-                            emp.setKra_pin(currentCell.getStringCellValue());
-                            break;
+//                        case 7:
+//                            emp.setKra_pin(String.valueOf(currentCell.getNumericCellValue()));
+//                            break;
                         case 8:
                             emp.setLastname(currentCell.getStringCellValue());
                             break;
                         case 9:
-                            emp.setMsisdn(String.valueOf(currentCell.getNumericCellValue()));
+                            emp.setMsisdn(String.valueOf(currentCell.getStringCellValue()));
                             break;
                         case 10:
-                            emp.setNational_id(String.valueOf(currentCell.getNumericCellValue()));
+                            emp.setNational_id(String.valueOf(currentCell.getStringCellValue()));
                             break;
-
                         case 11:
-                            emp.setNhif(currentCell.getStringCellValue());
+                            emp.setNhif(String.valueOf(currentCell.getNumericCellValue()));
                             break;
                         case 12:
-                            emp.setNssf(currentCell.getStringCellValue());
+                            emp.setNssf(String.valueOf(currentCell.getNumericCellValue()));
                             break;
                         case 13:
                             emp.setPassword(currentCell.getStringCellValue());
                             break;
                         case 14:
-                            emp.setStatus((int) currentCell.getNumericCellValue());
+                            emp.setStatus(Integer.valueOf(currentCell.getStringCellValue()));
                             break;
                         case 16:
-                            emp.setUsername(currentCell.getStringCellValue());
+                            emp.setUsername(String.valueOf(currentCell.getNumericCellValue()));
                             break;
                         default:
                             break;

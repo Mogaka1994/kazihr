@@ -9,6 +9,7 @@ import com.projectx.pay.globalFunctions.GlobalFunctions;
 import com.projectx.pay.model.UserModel;
 import com.projectx.pay.service.CrudService;
 import com.projectx.pay.service.UserService;
+import com.projectx.pay.utils.PdfGenerator;
 import com.projectx.pay.utils.ResourceNotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import static com.projectx.pay.globalFunctions.GlobalFunctions.generatePass;
 
@@ -32,7 +35,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
     @Autowired
     CrudService crudService;
 
@@ -43,71 +45,81 @@ public class UserController {
     @Autowired
     PasswordEncoder encoder;
 
-
     @ApiOperation(value = "Create users of Kazi HR.")
     @PostMapping("/create_user")
 //    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> createUser(@RequestBody UserModel model) throws JsonProcessingException {
-        User user = new User();
-        try {
+    CompletableFuture<String> createUser(@RequestBody UserModel model) {
+        return CompletableFuture.supplyAsync(() -> {
+            User user = new User();
+            try {
+                new PdfGenerator().generatePdfReport(userService.getAllUsers());
 //            String passwd = new GlobalFunctions().hmacDigest(generatePass());
-            user.setFirstname(model.getFirstname());
-            user.setLastname(model.getLastname());
-            user.setEmail(model.getEmail());
-            user.setUsername(model.getUsername());
-            user.setPassword(model.getPassword());
-            user.setAdmin(model.getAdmin());
-            user.setMsisdn(model.getMsisdn());
-            user.setPassword(encoder.encode(generatePass()));
-            user.setStatus(1);
-            user.setFirst_login(1);
-            if (!userService.checkIfRegistered(model.getMsisdn())) {
-                if (model.getRole() == null) {
-                    Roles userRole = userService.findByName(ERole.ROLE_USER)
-                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                    roles.add(userRole);
+                user.setFirstname(model.getFirstname());
+                user.setLastname(model.getLastname());
+                user.setEmail(model.getEmail());
+                user.setUsername(model.getUsername());
+                user.setPassword(model.getPassword());
+                user.setAdmin(model.getAdmin());
+                user.setMsisdn(model.getMsisdn());
+                user.setPassword(encoder.encode(generatePass()));
+                user.setStatus(1);
+                user.setFirst_login(1);
+                if (!userService.checkIfRegistered(model.getMsisdn())) {
+                    if (model.getRole() == null) {
+                        Roles userRole = userService.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                    } else {
+                        model.getRole().forEach(role -> {
+                            switch (role) {
+                                case "admin":
+                                    Roles adminRole = userService.findByName(ERole.ROLE_ADMIN)
+                                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                    roles.add(adminRole);
+
+                                    break;
+                                case "mod":
+                                    Roles modRole = userService.findByName(ERole.ROLE_MODERATOR)
+                                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                    roles.add(modRole);
+
+                                    break;
+                                default:
+                                    Roles userRole = userService.findByName(ERole.ROLE_USER)
+                                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                    roles.add(userRole);
+                            }
+                        });
+                        user.setRoles(roles);
+                    }
+                    userService.saveUser(user);
+                    responseMap.put("responseCode", "00");
+                    responseMap.put("responseMessage", "Successfully registered");
                 } else {
-                    model.getRole().forEach(role -> {
-                        switch (role) {
-                            case "admin":
-                                Roles adminRole = userService.findByName(ERole.ROLE_ADMIN)
-                                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                                roles.add(adminRole);
-
-                                break;
-                            case "mod":
-                                Roles modRole = userService.findByName(ERole.ROLE_MODERATOR)
-                                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                                roles.add(modRole);
-
-                                break;
-                            default:
-                                Roles userRole = userService.findByName(ERole.ROLE_USER)
-                                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                                roles.add(userRole);
-                        }
-                    });
-                    user.setRoles(roles);
+                    responseMap.put("responseCode", "01");
+                    responseMap.put("responseMessage", "User exists registered");
                 }
-                userService.saveUser(user);
-                responseMap.put("responseCode", "00");
-                responseMap.put("responseMessage", "Successfully registered");
-            } else {
+            } catch (Exception e) {
                 responseMap.put("responseCode", "01");
-                responseMap.put("responseMessage", "User exists registered");
+                responseMap.put("responseMessSage", e.getMessage());
+            } finally {
+                try {
+                    return new ObjectMapper().writeValueAsString(responseMap);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (Exception e) {
-            responseMap.put("responseCode", "01");
-            responseMap.put("responseMessSage", "Error processing request");
-        }
-        return new ResponseEntity<>(new ObjectMapper().writeValueAsString(responseMap), HttpStatus.OK);
-
+            return null;
+        });
     }
 
     @GetMapping("/users")
 //    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUsers() {
-        return userService.getAllUsers();
+        return userService.getAllUsers()
+                .stream()
+                .sorted(Comparator.comparing(User::getFirstname))
+                .collect(Collectors.toList());
     }
 
 
